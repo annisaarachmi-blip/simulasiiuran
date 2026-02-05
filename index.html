@@ -1853,16 +1853,28 @@ dataUsaha.forEach(d=>{
   list.appendChild(opt);
 });
 
+let rateJKKValue = 0;
 // auto isi risiko & rate
 const jenisUsaha = document.getElementById('jenisUsaha');
 jenisUsaha.addEventListener('input', ()=>{
   let val = jenisUsaha.value;
-  let found = dataUsaha.find(d=>d.usaha.toLowerCase()===val.toLowerCase());
+  let found = dataUsaha.find(
+    d => d.usaha.toLowerCase() === val.toLowerCase()
+  );
+
   if(found){
-    document.getElementById('tingkatRisiko').value = found.risiko;
-    document.getElementById('rateJKK').value = found.rate;
+    // TAMPILAN (UX)
+    document.getElementById('tingkatRisiko').value =
+      `Tingkat ${found.risiko}`;
+
+    document.getElementById('rateJKK').value =
+      `Rate ${found.rate}%`;
+
+    // NILAI HITUNG (LOGIC)
+    rateJKKValue = found.rate;
   }
 });
+
 
 // aturan JP aktif jika JHT dicentang
 const jht = document.getElementById('jht');
@@ -2070,7 +2082,7 @@ window.hitungPU = function () {
   const org = +document.getElementById('org').value;
   const bln = 1; // PU selalu per bulan
   const upah = getNumericValue(document.getElementById('upah'));
-  const rateJKK = +document.getElementById('rateJKK').value;
+  const rateJKK = rateJKKValue;
 
   if (rateJKK === 0) {
     alert('Pilih jenis usaha');
@@ -2176,76 +2188,87 @@ const namaProgram = daftarProgram.join(', ');
   hasilSection.style.display = 'block';
 };
 
+window.hitungJKK_Jakon_Progresif = function(dpp){
+  let sisa = dpp;
+  let total = 0;
+
+  const lapisan = [
+    { batas: 100_000_000, tarif: 0.0024 }, // s/d 100 jt
+    { batas: 400_000_000, tarif: 0.0019 }, // 100–500 jt
+    { batas: 500_000_000, tarif: 0.0015 }, // 500 jt–1 M
+    { batas: 4_000_000_000, tarif: 0.0012 }, // 1–5 M
+    { batas: Infinity, tarif: 0.0010 }     // >5 M
+  ];
+
+  for(const l of lapisan){
+    if(sisa <= 0) break;
+
+    const kena = Math.min(sisa, l.batas);
+    total += kena * l.tarif;
+    sisa -= kena;
+  }
+
+  return Math.ceil(total); // pembulatan ke atas
+};
+
 
 
 window.hitungJakon = function () {
-    const nilaiInput = getNumericValue(kontrakInput);
+  const nilaiInput = getNumericValue(kontrakInput);
   if (nilaiInput <= 0) {
     alert('Masukkan nilai kontrak');
     return;
   }
 
-  // 🔑 KUNCI: hitung DPP (tanpa PPN 11%)
+  // 1️⃣ DPP (tanpa PPN 11%)
   const dpp = Math.ceil(nilaiInput / 1.11);
 
-  const tarifJKK = getTarifJKK_Jakon(dpp);
-  const tarifJKM = getTarifJKM_Jakon(dpp);
+  // 2️⃣ HITUNG IURAN
+  const jkk = window.hitungJKK_Jakon_Progresif(dpp); // progresif
+  const totalIuran = hitungJKK_Jakon_Progresif(dpp);
 
-  const tarifJKKPersen = (tarifJKK * 100).toFixed(2);
-  const tarifJKMPersen = (tarifJKM * 100).toFixed(2);
-
-  const jkk = Math.ceil(dpp * tarifJKK);
-const jkm = Math.ceil(dpp * tarifJKM);
-const total = jkk + jkm;
-
+  // 3️⃣ TABEL
   const tbody = document.getElementById('tabelJakon');
-
-  tbody.innerHTML = `
-  
+ tbody.innerHTML = `
   <tr>
-    <td>JKK</td>
-    <td>${tarifJKKPersen}%</td>
-    <td>Rp ${format(jkk)}</td>
-  </tr>
-  <tr>
-    <td>JKM</td>
-    <td>${tarifJKMPersen}%</td>
-    <td>Rp ${format(jkm)}</td>
+    <td>JKK + JKM</td>
+    <td>Progresif</td>
+    <td>Rp ${format(totalIuran)}</td>
   </tr>
   <tr>
     <th>Total</th>
     <th>-</th>
-    <th>Rp ${format(total)}</th>
+    <th>Rp ${format(totalIuran)}</th>
   </tr>
   <tr>
     <td colspan="3" style="text-align:left;font-size:12px;color:#555">
       Nilai Kontrak (Input): <b>Rp ${format(nilaiInput)}</b><br>
-      Dasar Pengenaan Iuran (tanpa PPN 11%): 
+      Dasar Pengenaan Iuran (tanpa PPN 11%):
       <b>Rp ${format(dpp)}</b>
     </td>
   </tr>
 `;
-document.getElementById('hasilJakon').querySelector('.summary')?.remove();
 
-const summary = document.createElement('div');
-summary.className = 'summary';
-summary.innerHTML = `
-  Berdasarkan nilai kontrak pekerjaan sebesar 
-  <b>Rp ${format(nilaiInput)}</b> (termasuk PPN 11%),
-  maka dasar pengenaan iuran BPJS Ketenagakerjaan
-  Jasa Konstruksi adalah sebesar
-  <b>Rp ${format(dpp)}</b>.
-  <br><br>
-  Total iuran program Jaminan Kecelakaan Kerja (JKK)
-  dan Jaminan Kematian (JKM) yang wajib dibayarkan
-  adalah sebesar <b>Rp ${format(total)}</b>,
-  dapat dibayarkan sekaligus atau secara termin.
-`;
-document.getElementById('hasilJakon').appendChild(summary);
-  hasilJakon.style.display = 'block';
+  // 4️⃣ SUMMARY
+  document.getElementById('hasilJakon').querySelector('.summary')?.remove();
+
+  const summary = document.createElement('div');
+  summary.className = 'summary';
+  summary.innerHTML = `
+    Berdasarkan nilai kontrak pekerjaan sebesar
+    <b>Rp ${format(nilaiInput)}</b> (termasuk PPN 11%),
+    maka dasar pengenaan iuran BPJS Ketenagakerjaan
+    Jasa Konstruksi adalah sebesar
+    <b>Rp ${format(dpp)}</b>.
+    <br><br>
+    Total iuran program Jaminan Kecelakaan Kerja (JKK) dan
+Jaminan Kematian (JKM) yang wajib dibayarkan adalah sebesar
+<b>Rp ${format(totalIuran)}</b>.
+  `;
+
+  document.getElementById('hasilJakon').appendChild(summary);
+  document.getElementById('hasilJakon').style.display = 'block';
 };
-
-
 
 
 
