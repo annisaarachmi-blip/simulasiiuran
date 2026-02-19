@@ -439,10 +439,76 @@ th{background:#f1f5ff}
 }
 
 @media print {
-  .no-print {
-    display: none !important;
+
+  @page {
+    size: A4;
+    margin: 18mm;
   }
+
+  body {
+    background:#fff !important;
+    margin:0;
+    font-family:'Open Sans', Arial, sans-serif;
+  }
+
+  /* sembunyikan semua dulu */
+  body * {
+    visibility:hidden;
+  }
+
+  /* tampilkan hanya container */
+  .container,
+  .container * {
+    visibility:visible;
+  }
+
+  .container {
+    width:100%;
+    max-width:100%;
+  }
+
+  /* sembunyikan form & tombol */
+  #landingSection,
+  #formPU,
+  #formBPU,
+  #formJakon,
+  .cta-section,
+  .footer,
+  .footer-note,
+  .no-print,
+  button {
+    display:none !important;
+  }
+
+  /* perbaiki tabel */
+  table {
+    width:100% !important;
+    border-collapse:collapse;
+  }
+
+  th, td {
+    border:1px solid #000;
+    padding:8px;
+    font-size:12px;
+    text-align:center;
+  }
+
+  th {
+    background:#f2f2f2 !important;
+    font-weight:600;
+  }
+
+  /* summary */
+  .summary {
+    background:#f8fbff;
+    border-left:4px solid #0a4fb3;
+    padding:12px;
+    margin-top:15px;
+    font-size:13px;
+  }
+
 }
+
 
 </style>
 </head>
@@ -2524,83 +2590,8 @@ window.resetJakon= function (){
 
 }
 
-window.printSection = function(sectionId){
-
-  const content = document.getElementById(sectionId).innerHTML;
-
-  const printWindow = window.open('', '', 'width=900,height=700');
-
-  printWindow.document.write(`
-    <html>
-    <head>
-      <title>Simulasi Iuran BPJS Ketenagakerjaan</title>
-      <style>
-        body{
-          font-family:Gadugi;
-          padding:20px;
-        }
-        h2{
-          text-align:center;
-          margin-bottom:20px;
-        }
-        table{
-          width:100%;
-          border-collapse:collapse;
-        }
-        th,td{
-          border:1px solid #000;
-          padding:6px;
-          font-size:12px;
-          text-align:center;
-        }
-		
-		th{
-  background:#f5f7fa;
-  font-weight:600;
-}
-
-th{
-  background:#f2f2f2;
-  font-weight:600;
-}
-        .summary{
-          margin-top:15px;
-          font-size:13px;
-        }
-        .logo{
-          text-align:right;
-          margin-bottom:10px;
-        }
-        .logo img{
-          width:140px;
-        }
-
-        @media print {
-          .no-print{
-            display:none !important;
-          }
-        }
-
-      </style>
-    </head>
-    <body>
-
-      <div class="logo">
-        <img src="logo.png">
-      </div>
-
-      <h2>SIMULASI IURAN BPJS KETENAGAKERJAAN</h2>
-
-      ${content}
-
-    </body>
-    </html>
-  `);
-
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
-  printWindow.close();
+window.printSection = function(){
+  window.print();
 };
 
 });
@@ -2608,7 +2599,6 @@ th{
 </script>
 </body>
 </html>
-
 
 
 
