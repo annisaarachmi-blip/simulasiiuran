@@ -9,6 +9,11 @@
 <style>
 /* ===== TEMPLATE CSS ASLI ===== */
 	
+body{
+  font-family:Calibri, Arial, sans-serif;
+  padding:20px;
+}	
+	
 .cta-section{
   margin-top:30px;
   padding:20px;
@@ -286,6 +291,27 @@
   background:#083a86;
 }
 
+.btn-print{
+  width:auto !important;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 12px;
+  font-size:12px;
+  border-radius:999px;
+}
+
+.btn-print{
+  background:#f1f5ff;
+  color:#0a4fb3;
+  border:1px solid #0a4fb3;
+}
+.btn-print:hover{
+  background:#0a4fb3;
+  color:#fff;
+}
+
+
 .btn-danger{
   background:#FF0000;
   color:#FFFFFF;
@@ -412,6 +438,12 @@ th{background:#f1f5ff}
   font-size:15px;
 }
 
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -531,6 +563,13 @@ th{background:#f1f5ff}
   </div>
 
   <div class="summary" id="ringkasanBPU"></div>
+  <br>
+  <button id="btnPrintBPU"
+        class="btn-primary btn-print no-print"
+        style="display:none"
+        onclick="printSection('hasilBPU')">
+  🖨 Cetak PDF
+</button>
 </div>
 
 <!-- ================= FORM PU ================= -->
@@ -675,6 +714,13 @@ th{background:#f1f5ff}
 
   <div class="summary" id="kesimpulan"></div>
 </div>
+<br>
+<button id="btnPrintPU"
+        class="btn-primary btn-print no-print"
+        style="display:none"
+        onclick="printSection('hasilSection')">
+  🖨 Cetak PDF
+</button>
 </div>
 
 
@@ -773,6 +819,13 @@ th{background:#f1f5ff}
       <tbody id="tabelJakon"></tbody>
     </table>
   </div>
+  <br>
+  <button id="btnPrintJakon"
+        class="btn-primary btn-print no-print"
+        style="display:none"
+        onclick="printSection('hasilJakon')">
+  🖨 Cetak PDF
+</button>
 </div>
 
 <div class="footer">
@@ -2120,6 +2173,8 @@ document.getElementById('ringkasanBPU').innerHTML = `
 `;
 
   document.getElementById('hasilBPU').style.display = 'block';
+  document.getElementById('btnPrintBPU').style.display = 'inline-block';
+
 };
 
 
@@ -2184,20 +2239,22 @@ window.hitungPU = function () {
   let totalPekerjaBln = 0;
 
   function row(nama, perOrg, pPerush, pPekerja) {
+  perOrg = Math.round(perOrg);
+pPerush = Math.round(pPerush);
+pPekerja = Math.round(pPekerja);
+
   const iuranPerOrang = pPerush + pPekerja;
   const totalBln = iuranPerOrang * org;
-  const totalAll = totalBln * bln;
 
   tabel.innerHTML += `
     <tr>
       <td>${nama}</td>
       <td>Rp ${format(pPerush)}</td>
       <td>Rp ${format(pPekerja)}</td>
-	  <td>Rp ${format(perOrg)}</td>
+      <td>Rp ${format(perOrg)}</td>
     </tr>
   `;
 
-  // simpan total BULANAN
   totalPerusahaanBln += pPerush * org;
   totalPekerjaBln += pPekerja * org;
 }
@@ -2231,10 +2288,11 @@ window.hitungPU = function () {
       <th colspan="3">Iuran Ditanggung Pekerja</th>
       <th>Rp ${format(totalPekerjaBln * bln)}</th>
     </tr>
-    <tr>
-      <th colspan="3">Total Keseluruhan</th>
-      <th>Rp ${format((totalPerusahaanBln + totalPekerjaBln) * bln)}</th>
-    </tr>`;
+   <tr>
+  <th colspan="3">Total Keseluruhan</th>
+  <th>Rp ${format(Math.round((totalPerusahaanBln + totalPekerjaBln) * bln))}</th>
+</tr>
+`;
 
 // ===== DAFTAR PROGRAM YANG DIIKUTI =====
 let daftarProgram = ['JKK', 'JKM']; // wajib
@@ -2255,7 +2313,7 @@ const namaProgram = daftarProgram.join(', ');
 <p style="font-size:15px">
   Total iuran BPJS Ketenagakerjaan yang wajib dibayarkan untuk
   <b>${org} pekerja</b> <b>per bulan</b> adalah sebesar
-  <b>Rp ${format((totalPerusahaanBln + totalPekerjaBln))}</b>,
+  <b>Rp ${format(Math.round(totalPerusahaanBln + totalPekerjaBln))}</b>,
   dengan rincian sebagai berikut:
 </p>
 
@@ -2268,6 +2326,7 @@ const namaProgram = daftarProgram.join(', ');
 `;
 
   hasilSection.style.display = 'block';
+  document.getElementById('btnPrintPU').style.display = 'inline-block';
 };
 
 window.hitungJKK_Jakon_Progresif = function(dpp){
@@ -2350,6 +2409,7 @@ Jaminan Kematian (JKM) yang wajib dibayarkan adalah sebesar
 
   document.getElementById('hasilJakon').appendChild(summary);
   document.getElementById('hasilJakon').style.display = 'block';
+  document.getElementById('btnPrintJakon').style.display = 'inline-block';
 };
 
 
@@ -2432,6 +2492,7 @@ window.resetForm= function (){
 
   // scroll ke atas biar jelas reset
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('btnPrintPU').style.display = 'none';
 }
 
 window.resetBPU= function (){
@@ -2449,6 +2510,8 @@ window.resetBPU= function (){
   // opsional: scroll ke atas form BPU
   document.getElementById('formBPU')
     .scrollIntoView({ behavior:'smooth' });
+	document.getElementById('btnPrintBPU').style.display = 'none';
+
 }
 
 window.resetJakon= function (){
@@ -2457,13 +2520,84 @@ window.resetJakon= function (){
 
   document.getElementById('formJakon')
     .scrollIntoView({ behavior:'smooth' });
+	document.getElementById('btnPrintJakon').style.display = 'none';
+
 }
+
+window.printSection = function(sectionId){
+
+  const content = document.getElementById(sectionId).innerHTML;
+
+  const printWindow = window.open('', '', 'width=900,height=700');
+
+  printWindow.document.write(`
+    <html>
+    <head>
+      <title>Simulasi Iuran BPJS Ketenagakerjaan</title>
+      <style>
+        body{
+          font-family:Arial;
+          padding:20px;
+        }
+        h2{
+          text-align:center;
+          margin-bottom:20px;
+        }
+        table{
+          width:100%;
+          border-collapse:collapse;
+        }
+        th,td{
+          border:1px solid #000;
+          padding:6px;
+          font-size:12px;
+          text-align:center;
+        }
+        .summary{
+          margin-top:15px;
+          font-size:13px;
+        }
+        .logo{
+          text-align:right;
+          margin-bottom:10px;
+        }
+        .logo img{
+          width:140px;
+        }
+
+        @media print {
+          .no-print{
+            display:none !important;
+          }
+        }
+
+      </style>
+    </head>
+    <body>
+
+      <div class="logo">
+        <img src="logo.png">
+      </div>
+
+      <h2>Simulasi Iuran BPJS Ketenagakerjaan</h2>
+
+      ${content}
+
+    </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+  printWindow.close();
+};
+
 });
 
 </script>
 </body>
 </html>
-
 
 
 
