@@ -8,7 +8,40 @@
 
 <style>
 /* ===== TEMPLATE CSS ASLI ===== */
-	
+#tabelEstimasiJHT thead th{
+  background:#374151;
+  color:#fff;
+  font-weight:600;
+  border-color:#4b5563;
+}
+#tabelEstimasiJHT thead th:first-child{
+border-top-left-radius:6px;
+}
+
+#tabelEstimasiJHT thead th:last-child{
+border-top-right-radius:6px;
+}
+#tabelEstimasiJHT tbody tr:hover{
+background:#f9fafb;
+}
+
+
+#tabelEstimasiJHT td:nth-child(2){
+color:#374151;
+}
+
+#tabelEstimasiJHT td:nth-child(3){
+color:#2563eb;
+font-weight:600;
+}
+
+#tabelEstimasiJHT td:nth-child(4){
+color:#16a34a;
+font-weight:700;
+font-size:15px;
+}
+
+
 body{
   font-family:Calibri, Arial, sans-serif;
   padding:20px;
@@ -383,10 +416,10 @@ th,td{
 }
 th{background:#f1f5ff}
 .summary{
-  background:#eef6ff;
-  padding:12px;
+  background:#f8fafc;
+  padding:14px;
   margin-top:10px;
-  border-left:5px solid #0a4fb3;
+  border-left:4px solid #0a4fb3;
 }
 .form-grid-3{
   display:grid;
@@ -779,6 +812,35 @@ th{background:#f1f5ff}
   </div>
 
   <div class="summary" id="kesimpulan"></div>
+  
+  <div class="summary" id="estimasiJHTBox" style="display:none">
+
+<h4 style="margin-top:0">Estimasi Saldo JHT per Peserta</h4>
+
+<div class="table-wrap">
+<table id="tabelEstimasiJHT">
+
+<thead>
+<tr>
+<th><b>Masa Kerja</b></th>
+<th><b>Total Iuran Disetor</b></th>
+<th><b>Hasil Pengembangan</b></th>
+<th><b>Saldo Akhir</b></th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+</div>
+
+<small style="color:#666">
+Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan upah tetap.
+</small>
+
+</div>
+  
+  
 </div>
 <br>
 <button id="btnPrintPU"
@@ -2393,6 +2455,52 @@ const namaProgram = daftarProgram.join(', ');
 
   hasilSection.style.display = 'block';
   document.getElementById('btnPrintPU').style.display = 'inline-block';
+  
+  if(jht.checked){
+
+const estimasi = hitungEstimasiJHT(upah);
+
+const tbody = document.querySelector("#tabelEstimasiJHT tbody");
+
+tbody.innerHTML = `
+<tr>
+<td>10 Tahun</td>
+<td class="anim" data-value="${estimasi.t10.iuran}"></td>
+<td class="anim" data-value="${estimasi.t10.pengembangan}"></td>
+<td class="anim" data-value="${estimasi.t10.saldo}"></td>
+</tr>
+
+<tr>
+<td>15 Tahun</td>
+<td class="anim" data-value="${estimasi.t15.iuran}"></td>
+<td class="anim" data-value="${estimasi.t15.pengembangan}"></td>
+<td class="anim" data-value="${estimasi.t15.saldo}"></td>
+</tr>
+
+<tr>
+<td>20 Tahun</td>
+<td class="anim" data-value="${estimasi.t20.iuran}"></td>
+<td class="anim" data-value="${estimasi.t20.pengembangan}"></td>
+<td class="anim" data-value="${estimasi.t20.saldo}"></td>
+</tr>
+`;
+
+document.getElementById("estimasiJHTBox").style.display="block";
+
+setTimeout(()=>{
+
+document.querySelectorAll(".anim").forEach(el=>{
+let val = Number(el.dataset.value);
+animateValue(el,0,val,1200);
+});
+
+},200);
+
+}else{
+
+document.getElementById("estimasiJHTBox").style.display="none";
+
+}
 };
 
 window.hitungJKK_Jakon_Progresif = function(dpp){
@@ -2419,6 +2527,74 @@ window.hitungJKK_Jakon_Progresif = function(dpp){
 };
 
 
+
+function hitungEstimasiJHT(upah){
+
+const bungaTahunan = 0.05;
+const bungaBulanan = Math.pow(1 + bungaTahunan, 1/12) - 1;
+
+const iuranBulanan = upah * 0.057;
+
+function simulasi(tahun){
+
+let saldo = 0;
+let totalIuran = 0;
+
+let bulan = tahun * 12;
+
+for(let i=0;i<bulan;i++){
+
+saldo = saldo * (1 + bungaBulanan);
+
+saldo += iuranBulanan;
+
+totalIuran += iuranBulanan;
+
+saldo = Math.round(saldo);
+
+}
+
+let pengembangan = saldo - totalIuran;
+
+return {
+saldo: saldo,
+iuran: totalIuran,
+pengembangan: pengembangan
+}
+
+}
+
+return {
+t10: simulasi(10),
+t15: simulasi(15),
+t20: simulasi(20)
+}
+
+}
+
+
+function animateValue(el, start, end, duration){
+let startTime = null;
+
+function animation(currentTime){
+
+if(!startTime) startTime = currentTime;
+
+const progress = Math.min((currentTime - startTime) / duration, 1);
+
+const value = Math.floor(progress * (end - start) + start);
+
+el.innerText = "Rp " + format(value);
+
+if(progress < 1){
+requestAnimationFrame(animation);
+}
+
+}
+
+requestAnimationFrame(animation);
+
+}
 
 window.hitungJakon = function () {
   const nilaiInput = getNumericValue(kontrakInput);
