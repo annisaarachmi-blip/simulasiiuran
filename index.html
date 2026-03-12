@@ -2178,23 +2178,39 @@ jht.addEventListener('change', ()=>{
 });
 
 window.showPU = function () {
+
   formPU.style.display = 'block';
   formBPU.style.display = 'none';
   formJakon.style.display = 'none';
 
+  // sembunyikan semua hasil
   hasilBPU.style.display = 'none';
   hasilJakon.style.display = 'none';
+  hasilSection.style.display = 'none';
+
+  // sembunyikan manfaat BPU
+  document.getElementById("estimasiJHTBoxBPU").style.display = "none";
+
+  // sembunyikan manfaat PU
+  document.getElementById("estimasiJHTBox").style.display = "none";
+  document.getElementById("grafikJHTBox").style.display = "none";
 
   formPU.scrollIntoView({ behavior:'smooth' });
 };
 
 window.showBPU = function () {
+
   formBPU.style.display = 'block';
   formPU.style.display = 'none';
   formJakon.style.display = 'none';
 
+  // sembunyikan hasil lain
   hasilSection.style.display = 'none';
   hasilJakon.style.display = 'none';
+
+  // sembunyikan manfaat PU
+  document.getElementById("estimasiJHTBox").style.display = "none";
+  document.getElementById("grafikJHTBox").style.display = "none";
 
   formBPU.scrollIntoView({ behavior:'smooth' });
 };
