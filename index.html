@@ -8,38 +8,7 @@
 
 <style>
 /* ===== TEMPLATE CSS ASLI ===== */
-#tabelEstimasiJHT thead th{
-  background:#4b5563;
-  color:#fff;
-  font-weight:600;
-  border-color:#4b5563;
-}
-#tabelEstimasiJHT thead th:first-child{
-border-top-left-radius:6px;
-}
 
-#tabelEstimasiJHT thead th:last-child{
-border-top-right-radius:6px;
-}
-#tabelEstimasiJHT tbody tr:hover{
-background:#f9fafb;
-}
-
-
-#tabelEstimasiJHT td:nth-child(2){
-color:#374151;
-}
-
-#tabelEstimasiJHT td:nth-child(3){
-color:#2563eb;
-font-weight:600;
-}
-
-#tabelEstimasiJHT td:nth-child(4){
-color:#16a34a;
-font-weight:700;
-font-size:15px;
-}
 
 
 body{
@@ -473,6 +442,20 @@ th{background:#f1f5ff}
 
 @media print {
 
+/* halaman baru untuk manfaat */
+#estimasiJHTBox,
+#estimasiJHTBoxBPU{
+  page-break-before: always;
+  break-before: page;
+}
+
+#estimasiJHTBox,
+#estimasiJHTBoxBPU{
+  page-break-before: always;
+  break-before: page;
+  page-break-inside: avoid;
+}
+
   @page {
     size: A4;
     margin: 18mm;
@@ -646,7 +629,7 @@ th{background:#f1f5ff}
 </div>
 <div class="section bpu-result" id="hasilBPU" style="display:none">
 
-  <h3>Hasil Simulasi BPU</h3>
+  <h3 style="margin-top:10px">Hasil Simulasi BPU</h3>
 
   <div class="table-wrap">
     <table>
@@ -660,9 +643,8 @@ th{background:#f1f5ff}
       <tbody id="tabelBPU"></tbody>
     </table>
   </div>
-
   <div class="summary" id="ringkasanBPU"></div>
-  <br>
+    <br>
   <button id="btnPrintBPU"
         class="btn-primary btn-print no-print"
         style="display:none"
@@ -670,6 +652,37 @@ th{background:#f1f5ff}
   🖨 Cetak PDF
 </button>
 </div>
+  
+<div class="section bpu-result" id="estimasiJHTBoxBPU" style="display:none">
+<h3 style="margin-top:5px;margin-bottom:2px">Manfaat yang Didapatkan</h3>
+<h4 style="margin-bottom:0;margin-top:0">💰 Estimasi Saldo JHT</h4>
+<div class="table-wrap">
+<table id="tabelEstimasiJHTBPU">
+<thead>
+<tr>
+<th>Masa Kerja</th>
+<th>Total Iuran Disetor</th>
+<th>Hasil Pengembangan</th>
+<th>Saldo Akhir</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+<small style="color:#666">
+Simulasi menggunakan asumsi pengembangan dana 5% per tahun.
+</small>
+<br>
+<br>
+
+<h4 style="margin-top:0">📈 Grafik Pertumbuhan Estimasi Saldo JHT</h4>
+<div style="width:100%;max-width:1000px;margin:auto">
+<canvas id="grafikJHTBPU" height="170"></canvas>
+</div>
+
+
+</div>
+
 
 <!-- ================= FORM PU ================= -->
 <div id="formPU" style="display:none" class="section">
@@ -796,13 +809,12 @@ th{background:#f1f5ff}
 
 <!-- HASIL -->
 <div class="section" id="hasilSection" style="display:none;">
-  <h3>Hasil Simulasi</h3>
+  <h3 style=="margin-top:0px;margin-bottom:0px">Hasil Simulasi PU</h3>
    <div class="result-wrap">
   <div class="table-wrap">
    <table id="tabelHasil">
   <tr>
     <th>Program</th>
-
     <th>Ditanggung Perusahaan</th>
     <th>Ditanggung Pekerja</th>
     <th>Iuran/Orang/Bulan</th>
@@ -810,15 +822,23 @@ th{background:#f1f5ff}
   </tr>
 </table>
   </div>
-
   <div class="summary" id="kesimpulan"></div>
-  
-  <div class="summary" id="estimasiJHTBox" style="display:none">
+</div>
+<br>
+<button id="btnPrintPU"
+        class="btn-primary btn-print no-print"
+        style="display:none"
+        onclick="printSection('hasilSection')">
+  🖨 Cetak PDF
+</button>
+</div>
 
-<h4 style="margin-top:0">Estimasi Saldo JHT per Peserta</h4>
-
+  <div class="section" id="estimasiJHTBox" style="display:none">
+<h3 style="margin-top:5px;margin-bottom:1px">Manfaat yang Didapatkan</h3>
+<h4 style="margin-bottom:1px;margin-top:0">💰 Estimasi Saldo JHT</h4>
+<div class="result-wrap">
 <div class="table-wrap">
-<table id="tabelEstimasiJHT">
+<table style="margin-top:0" id="tabelEstimasiJHT">
 
 <thead>
 <tr>
@@ -838,10 +858,7 @@ th{background:#f1f5ff}
 Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan upah tidak berubah.
 </small>
 
-</div>
-
 <div class="summary" id="grafikJHTBox" style="display:none">
-
 <h4 style="margin-top:0">📈 Grafik Pertumbuhan Estimasi Saldo JHT</h4>
 
 <div style="width:100%;max-width:1000px;margin:auto">
@@ -849,21 +866,16 @@ Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan upah tidak beruba
 </div>
 
 <small style="color:#666">
-Klik / arahkan kursor ke titik grafik untuk melihat estimasi saldo tiap tahun.
+Klik / Arahkan kursor ke titik grafik untuk melihat estimasi saldo tiap tahun.
 </small>
 
 </div>
-  
+  </div>
   
 </div>
-<br>
-<button id="btnPrintPU"
-        class="btn-primary btn-print no-print"
-        style="display:none"
-        onclick="printSection('hasilSection')">
-  🖨 Cetak PDF
-</button>
-</div>
+
+
+
 
 
 <!-- ================= FORM JASA KONSTRUKSI ================= -->
@@ -2317,6 +2329,45 @@ document.getElementById('ringkasanBPU').innerHTML = `
   document.getElementById('hasilBPU').style.display = 'block';
   document.getElementById('btnPrintBPU').style.display = 'inline-block';
 
+if(ikutJHT){
+
+const estimasi = hitungEstimasiJHT(income * 0.02);
+
+const tbodyEstimasi = document.querySelector("#tabelEstimasiJHTBPU tbody");
+
+tbodyEstimasi.innerHTML = `
+<tr>
+<td>10 Tahun</td>
+<td>Rp ${format(estimasi.t10.iuran)}</td>
+<td>Rp ${format(estimasi.t10.pengembangan)}</td>
+<td><b>Rp ${format(estimasi.t10.saldo)}</b></td>
+</tr>
+
+<tr>
+<td>15 Tahun</td>
+<td>Rp ${format(estimasi.t15.iuran)}</td>
+<td>Rp ${format(estimasi.t15.pengembangan)}</td>
+<td><b>Rp ${format(estimasi.t15.saldo)}</b></td>
+</tr>
+
+<tr>
+<td>20 Tahun</td>
+<td>Rp ${format(estimasi.t20.iuran)}</td>
+<td>Rp ${format(estimasi.t20.pengembangan)}</td>
+<td><b>Rp ${format(estimasi.t20.saldo)}</b></td>
+</tr>
+`;
+
+document.getElementById("estimasiJHTBoxBPU").style.display="block";
+
+renderGrafikJHT(iuranJHTBulanan,"grafikJHTBPU","grafikJHTBoxBPU");
+
+}else{
+
+document.getElementById("estimasiJHTBoxBPU").style.display="none";
+document.getElementById("grafikJHTBoxBPU").style.display="none";
+
+}
 };
 
 
@@ -2357,11 +2408,23 @@ upahInput.addEventListener('input', ()=>{
 });
 
 
+
+
 window.hitungPU = function () {
   const org = +document.getElementById('org').value;
   const bln = 1; // PU selalu per bulan
   const upah = getNumericValue(document.getElementById('upah'));
   const rateJKK = rateJKKValue;
+	
+if(upah <= 0){
+  alert("Masukkan Upah Bulanan terlebih dahulu.");
+  document.getElementById('upah').focus();
+  return;
+}
+
+upahInput.addEventListener("input",()=>{
+  upahInput.style.border = "";
+});
 
   if (rateJKK === 0) {
     alert('Pilih jenis usaha');
@@ -2472,7 +2535,7 @@ const namaProgram = daftarProgram.join(', ');
   
   if(jht.checked){
 
-const estimasi = hitungEstimasiJHT(upah);
+const estimasi = hitungEstimasiJHT(upah * 0.057);
 
 const tbody = document.querySelector("#tabelEstimasiJHT tbody");
 
@@ -2500,7 +2563,7 @@ tbody.innerHTML = `
 `;
 
 document.getElementById("estimasiJHTBox").style.display="block";
-renderGrafikJHT(upah);
+renderGrafikJHT(upah * 0.057,"grafikJHT","grafikJHTBox");
 setTimeout(()=>{
 
 document.querySelectorAll(".anim").forEach(el=>{
@@ -2542,12 +2605,11 @@ window.hitungJKK_Jakon_Progresif = function(dpp){
 
 
 
-function hitungEstimasiJHT(upah){
+function hitungEstimasiJHT(iuranBulanan){
 
 const bungaTahunan = 0.05;
 const bungaBulanan = Math.pow(1 + bungaTahunan, 1/12) - 1;
 
-const iuranBulanan = upah * 0.057;
 
 function simulasi(tahun){
 
@@ -2610,12 +2672,10 @@ requestAnimationFrame(animation);
 
 }
 
-function dataGrafikJHT(upah){
+function dataGrafikJHT(iuranBulanan){
 
 const bungaTahunan = 0.05;
 const bungaBulanan = Math.pow(1 + bungaTahunan, 1/12) - 1;
-
-const iuranBulanan = upah * 0.057;
 
 let saldo = 0;
 let data = [];
@@ -2623,7 +2683,6 @@ let data = [];
 for(let bulan=1; bulan<=240; bulan++){
 
 saldo = saldo * (1 + bungaBulanan);
-
 saldo += iuranBulanan;
 
 saldo = Math.round(saldo);
@@ -2640,13 +2699,13 @@ return data;
 
 let chartJHT;
 
-function renderGrafikJHT(upah){
+function renderGrafikJHT(iuranBulanan, canvasId, boxId){
 
-const saldoTahunan = dataGrafikJHT(upah);
+const saldoTahunan = dataGrafikJHT(iuranBulanan);
 
 const labels = Array.from({length:20},(_,i)=> i+1);
 
-const ctx = document.getElementById("grafikJHT");
+const ctx = document.getElementById(canvasId);
 
 if(chartJHT){
 chartJHT.destroy();
@@ -2671,27 +2730,20 @@ pointBackgroundColor:'#16a34a'
 options:{
 responsive:true,
 plugins:{
+legend:{display:false},
 tooltip:{
 callbacks:{
-
 title:function(context){
-const tahun = context[0].label;
-return "Masa Kerja " + tahun + " Tahun";
+return "Masa Kerja " + context[0].label + " Tahun";
 },
-
 label:function(context){
 return "Estimasi Saldo Rp " + format(context.raw);
 }
-
 }
-}
-,
-legend:{
-display:false
 }
 },
-scales:{
 
+scales:{
 x:{
 ticks:{
 callback:function(value,index){
@@ -2699,6 +2751,7 @@ callback:function(value,index){
 const tahun = index + 1;
 
 if(tahun === 1) return "1";
+if(tahun === 2) return "2";
 
 if(tahun % 2 === 0) return tahun;
 
@@ -2713,33 +2766,15 @@ title:{
 display:true,
 text:'Masa Kerja (Tahun)'
 }
-},
-
-y:{
-ticks:{
-callback:function(value){
-return "Rp " + format(value);
-}
-},
-title:{
-display:true,
-text:'Saldo JHT'
-}
-}
-
-}
+}},
 
 
 }
 });
 
-document.getElementById("grafikJHTBox").style.display="block";
+document.getElementById(boxId).style.display="block";
 
 }
-
-
-
-
 
 
 window.hitungJakon = function () {
@@ -2860,55 +2895,145 @@ kontrakInput.addEventListener('input', () => {
   info.innerText = `Dasar pengenaan iuran (tanpa PPN 11%): Rp ${format(dpp)}`;
 });
 
-window.resetForm= function (){
+function resetUniversal(config){
+
   // reset input
-  document.getElementById('org').value = 100;
-  document.getElementById('bln').value = 12;
-  document.getElementById('upah').value = '';
-  document.getElementById('jenisUsaha').value = '';
-  document.getElementById('tingkatRisiko').value = '';
-  document.getElementById('rateJKK').value = '';
+  if(config.inputs){
+    config.inputs.forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.value = '';
+    });
+  }
 
   // reset checkbox
-  jht.checked = false;
-  jp.checked = false;
-  jp.disabled = true;
-  document.getElementById('jpCard')?.classList.add('disabled');
+  if(config.checks){
+    config.checks.forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.checked = false;
+    });
+  }
 
-  // sembunyikan hasil
-  document.getElementById('hasilSection').style.display = 'none';
+  // hide section
+  if(config.sections){
+    config.sections.forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.style.display = 'none';
+    });
+  }
 
-  // scroll ke atas biar jelas reset
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  document.getElementById('btnPrintPU').style.display = 'none';
+  // clear table
+  if(config.tables){
+    config.tables.forEach(selector=>{
+      const el = document.querySelector(selector);
+      if(el) el.innerHTML = '';
+    });
+  }
+
+  // destroy chart
+  if(config.chart && window[config.chart]){
+    window[config.chart].destroy();
+    window[config.chart] = null;
+  }
+
+  // hide print button
+  if(config.printBtn){
+    const btn = document.getElementById(config.printBtn);
+    if(btn) btn.style.display = 'none';
+  }
+
 }
 
-window.resetBPU= function (){
 
-  // reset input
-  document.getElementById('incomeBPU').value = '';
+window.resetForm = function(){
+
+  resetUniversal({
+    inputs:[
+      'upah','jenisUsaha','tingkatRisiko','rateJKK'
+    ],
+
+    checks:[
+      'jht','jp'
+    ],
+
+    sections:[
+      'hasilSection',
+      'estimasiJHTBox',
+      'grafikJHTBox'
+    ],
+
+    tables:[
+      '#tabelEstimasiJHT tbody'
+    ],
+
+    chart:'chartJHT',
+
+    printBtn:'btnPrintPU'
+  });
+
+  document.getElementById('org').value = 2;
+
+  jp.disabled = true;
+  document.getElementById('jpCard').classList.add('disabled');
+
+  window.scrollTo({top:0,behavior:'smooth'});
+
+};
+
+window.resetBPU = function(){
+
+  resetUniversal({
+
+    inputs:[
+      'incomeBPU'
+    ],
+
+    checks:[
+      'jhtBPU'
+    ],
+
+    sections:[
+      'hasilBPU',
+      'estimasiJHTBoxBPU',
+      'grafikJHTBoxBPU'
+    ],
+
+    tables:[
+      '#tabelEstimasiJHTBPU tbody'
+    ],
+
+    printBtn:'btnPrintBPU'
+
+  });
+
   document.getElementById('bulanBPU').value = 12;
 
-  // reset checkbox
-  document.getElementById('jhtBPU').checked = false;
+  document.getElementById('formBPU')
+    .scrollIntoView({behavior:'smooth'});
+
+};
+
+window.resetJakon = function(){
+
+  // reset input
+  kontrakInput.value = '';
+
+  // hapus info DPP
+  document.getElementById('infoTarifJakon').innerText = '';
+
+  // hapus highlight tabel tarif
+  document
+    .querySelectorAll('#infoRangeJakon tbody tr')
+    .forEach(row => row.classList.remove('tr-active'));
 
   // sembunyikan hasil
-  document.getElementById('hasilBPU').style.display = 'none';
-
-  // opsional: scroll ke atas form BPU
-  document.getElementById('formBPU')
-    .scrollIntoView({ behavior:'smooth' });
-	document.getElementById('btnPrintBPU').style.display = 'none';
-
-}
-
-window.resetJakon= function (){
-  kontrakInput.value = '';
   document.getElementById('hasilJakon').style.display = 'none';
 
+  // sembunyikan tombol print
+  document.getElementById('btnPrintJakon').style.display = 'none';
+
+  // scroll kembali ke form
   document.getElementById('formJakon')
     .scrollIntoView({ behavior:'smooth' });
-	document.getElementById('btnPrintJakon').style.display = 'none';
 
 }
 
