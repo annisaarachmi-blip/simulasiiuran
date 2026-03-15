@@ -442,6 +442,8 @@ th{background:#f1f5ff}
 
 @media print {
 
+
+
 /* halaman baru untuk manfaat */
 #estimasiJHTBox,
 #estimasiJHTBoxBPU{
@@ -453,6 +455,17 @@ th{background:#f1f5ff}
 #estimasiJHTBoxBPU{
   page-break-before: always;
   break-before: page;
+  page-break-inside: avoid;
+}
+
+
+
+#manfaatProgram{
+  page-break-before: always;
+  break-before: page;
+}
+
+#manfaatProgram table{
   page-break-inside: avoid;
 }
 
@@ -659,7 +672,7 @@ th{background:#f1f5ff}
        margin-bottom:12px;
        padding:12px
      ">
-<h3 style="margin-top:5px;margin-bottom:2px">Manfaat Jaminan Hari Tua</h3>
+<h4 style="margin-top:5px;margin-bottom:2px">Manfaat Jaminan Hari Tua</h4>
 <h5 style="margin-bottom:0;margin-top:0">💰 Estimasi Saldo JHT</h5>
 <div class="table-wrap">
 <table id="tabelEstimasiJHTBPU">
@@ -844,8 +857,8 @@ Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan penghasilan tidak
        margin-bottom:12px;
        padding:12px
      ">
-<h3 style="margin-top:5px;margin-bottom:1px">Manfaat Jaminan Hari Tua</h3>
-<h4 style="margin-bottom:1px;margin-top:0">💰 Estimasi Saldo JHT</h4>
+<h4 style="margin-top:5px;margin-bottom:1px">Manfaat Jaminan Hari Tua</h4>
+<h5 style="margin-bottom:1px;margin-top:0">💰 Estimasi Saldo JHT</h5>
 <div class="result-wrap">
 <div class="table-wrap">
 <table style="margin-top:0" id="tabelEstimasiJHT">
@@ -864,12 +877,12 @@ Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan penghasilan tidak
 </table>
 </div>
 
-<small style="color:#666">
+<font size="1px" style="color:#666">
 Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan upah tidak berubah.
-</small>
+</font>
 
 <div class="summary" id="grafikJHTBox" style="display:none">
-<h4 style="margin-top:0">📈 Grafik Pertumbuhan Estimasi Saldo JHT</h4>
+<h5 style="margin-top:0">📈 Grafik Pertumbuhan Estimasi Saldo JHT</h5>
 
 <div style="width:100%;max-width:1000px;margin:auto">
 <canvas id="grafikJHT" height="170"></canvas>
@@ -882,6 +895,72 @@ Klik / Arahkan kursor ke titik grafik untuk melihat estimasi saldo tiap tahun.
 </div>
   </div>
   
+</div>
+
+
+<div class="section" id="manfaatJP"
+style="
+       display:none;
+	   max-width:600px;
+       margin-top:12px;
+       padding:12px
+     ">
+
+<h4 style="margin-top:5px;margin-bottom:5px">
+Manfaat Jaminan Pensiun
+</h4>
+
+<div class="table-wrap">
+<table>
+
+<thead>
+<tr>
+<th>Jenis Manfaat</th>
+<th>Keterangan</th>
+<th>Estimasi</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Pensiun Hari Tua</td>
+<td>Dibayarkan setiap bulan saat peserta mencapai usia pensiun (57 tahun dan bertahap menjadi 65 tahun)</td>
+<td>Sesuai masa iuran dan upah</td>
+</tr>
+
+<tr>
+<td>Pensiun Cacat</td>
+<td>Jika peserta mengalami cacat total tetap sebelum usia pensiun</td>
+<td>Dibayarkan setiap bulan</td>
+</tr>
+
+<tr>
+<td>Pensiun Janda/Duda</td>
+<td>Jika peserta meninggal dunia</td>
+<td>Dibayarkan setiap bulan kepada pasangan</td>
+</tr>
+
+<tr>
+<td>Pensiun Anak</td>
+<td>Jika peserta meninggal dunia</td>
+<td>Maks 2 anak, s/d maks umur 23 tahun/ bekerja/ menikah </td>
+</tr>
+
+<tr>
+<td>Pensiun Orang Tua</td>
+<td>Jika peserta belum menikah dan meninggal dunia</td>
+<td>Dibayarkan kepada orang tua</td>
+</tr>
+
+</tbody>
+
+</table>
+</div>
+<font size="1px" id="catatanJP" style="color:#666;margin-top:1px">
+(Manfaat JP Tahun 2026) Manfaat minimum : Rp 411.400 | Manfaat maksimum : Rp 4.932.300
+</font>
+
 </div>
 
 
@@ -1121,6 +1200,9 @@ style="
 </tbody>
 </table>
 </div>
+<font size="1,5px" id="catatanJakon" style="color:#666;display:none;margin-top:6px">
+Catatan: Estimasi manfaat Jaminan Kecelakaan Kerja (JKK) pada simulasi Jasa Konstruksi menggunakan asumsi upah sebesar <b>Rp 2.000.000</b> per bulan.
+</font>
 
 </div>
 
@@ -2322,6 +2404,26 @@ jht.addEventListener('change', ()=>{
   jpCard.classList.toggle('disabled', !jht.checked);
 });
 
+
+const manfaatJP = document.getElementById('manfaatJP');
+
+jp.addEventListener('change', () => {
+  if (!jp.checked) {
+    manfaatJP.style.display = 'none';
+  }
+});
+
+
+jht.addEventListener('change', ()=>{
+  jp.disabled = !jht.checked;
+  jp.checked = false;
+
+  jpCard.classList.toggle('disabled', !jht.checked);
+
+  // sembunyikan manfaat JP
+  document.getElementById("manfaatJP").style.display = "none";
+});
+
 window.showPU = function () {
 
   formPU.style.display = 'block';
@@ -2339,8 +2441,9 @@ window.showPU = function () {
   // sembunyikan manfaat PU
   document.getElementById("estimasiJHTBox").style.display = "none";
   document.getElementById("grafikJHTBox").style.display = "none";
-
   document.getElementById("manfaatProgram").style.display = "none";
+   document.getElementById("manfaatJP").style.display = "none"; // tambah ini
+   document.getElementById("catatanJakon").style.display = "none";
   
   formPU.scrollIntoView({ behavior:'smooth' });
 };
@@ -2359,6 +2462,8 @@ window.showBPU = function () {
   document.getElementById("estimasiJHTBox").style.display = "none";
   document.getElementById("grafikJHTBox").style.display = "none";
 document.getElementById("manfaatProgram").style.display = "none";
+  document.getElementById("manfaatJP").style.display = "none"; // tambah ini
+  document.getElementById("catatanJakon").style.display = "none";
   formBPU.scrollIntoView({ behavior:'smooth' });
 };
 
@@ -2376,6 +2481,8 @@ window.showJakon = function () {
 
   // sembunyikan manfaat program
   document.getElementById("manfaatProgram").style.display = "none";
+  document.getElementById("manfaatJP").style.display = "none";
+  document.getElementById("catatanJakon").style.display = "block";
 
   // sembunyikan estimasi JHT PU
   document.getElementById("estimasiJHTBox").style.display = "none";
@@ -2384,6 +2491,8 @@ window.showJakon = function () {
   // sembunyikan estimasi JHT BPU
   document.getElementById("estimasiJHTBoxBPU").style.display = "none";
   document.getElementById("grafikJHTBoxBPU").style.display = "none";
+  
+  
 
   formJakon.scrollIntoView({ behavior:'smooth' });
 };
@@ -2713,10 +2822,10 @@ const namaProgram = daftarProgram.join(', ');
 </p>
 
 <p style="font-size:15px">
-  Total iuran BPJS Ketenagakerjaan yang wajib dibayarkan untuk
-  <b>${org} pekerja</b> <b>per bulan</b> adalah sebesar
-  <b>Rp ${format(Math.round(totalPerusahaanBln + totalPekerjaBln))}</b>,
-  dengan rincian sebagai berikut:
+  Total iuran BPJS Ketenagakerjaan yang wajib dibayarkan setiap bulan untuk <b>${org} pekerja</b>, 
+  dengan upah yang dilaporkan sebesar <b>Rp ${format(upah)}</b> per pekerja,
+  adalah sebesar <b>Rp ${format(Math.round(totalPerusahaanBln + totalPekerjaBln))}</b>, 
+  yang terdiri dari iuran yang ditanggung oleh pemberi kerja dan pekerja dengan rincian sebagai berikut:
 </p>
 
 <ul style="font-size:15px">
@@ -2725,6 +2834,7 @@ const namaProgram = daftarProgram.join(', ');
   <li>Iuran yang ditanggung pekerja sebesar
       <b>Rp ${format(totalPekerjaBln)}</b></li>
 </ul>
+
 `;
 
   hasilSection.style.display = 'block';
@@ -2777,6 +2887,9 @@ document.getElementById("grafikJHTBox").style.display="none";
 }
 hitungManfaat(upah);
 document.getElementById("manfaatProgram").style.display="block";
+if (jp.checked) {
+  document.getElementById("manfaatJP").style.display = "block";
+}
 
 };
 
@@ -3163,7 +3276,8 @@ window.resetForm = function(){
       'hasilSection',
       'estimasiJHTBox',
       'grafikJHTBox',
-	  'manfaatProgram'
+	  'manfaatProgram',
+	  'manfaatJP'
     ],
 
     tables:[
