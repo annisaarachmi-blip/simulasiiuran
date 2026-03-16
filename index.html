@@ -3546,26 +3546,10 @@ cariKantorTerdekat(latUser,lngUser);
 
 function cariKantorTerdekat(lat,lng){
 
-let jarakMin = Infinity;
-let kantorDekat = null;
+// sementara kita ambil kantor pertama dari database
+// nanti bisa kita kembangkan lagi jika ada koordinat
 
-kantorBPJS.forEach(kantor=>{
-
-let jarak = hitungJarak(
-lat,
-lng,
-kantor.lat,
-kantor.lng
-);
-
-if(jarak < jarakMin){
-
-jarakMin = jarak;
-kantorDekat = kantor;
-
-}
-
-});
+let kantorDekat = kantorBPJS[0];
 
 if(kantorDekat){
 
@@ -3580,7 +3564,7 @@ document.getElementById("mapsKantor").href =
 encodeURIComponent(kantorDekat.nama + " " + kantorDekat.alamat);
 
 document.getElementById("jarakKantor").innerHTML =
-"📏 "+jarakMin.toFixed(1)+" km dari lokasi Anda";
+"Lokasi kantor berdasarkan data cabang BPJS";
 
 document.getElementById("kontakBPJS").style.display="block";
 
