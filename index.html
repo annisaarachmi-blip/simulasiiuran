@@ -934,39 +934,6 @@ Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan penghasilan tidak
   🖨 Cetak PDF
 </button>
 
-<div id="kontakBPJS" class="contact-card">
-
-<div class="contact-header">
-📞 Informasi Lebih Lanjut
-</div>
-
-<div class="contact-body">
-
-<div class="contact-row">
-<span class="icon">🏢</span>
-<span id="namaKantor"></span>
-</div>
-<div id="jarakKantor" class="distance"></div>
-
-<div class="contact-row">
-<span class="icon">📍</span>
-<span id="alamatKantor"></span>
-</div>
-
-<a id="mapsKantor" class="maps-btn" target="_blank">
-📍 Buka di Google Maps
-</a>
-
-<br>
-<font size="1px" style="color:#666">
-Kantor Cabang terdekat berdasarkan lokasi Anda.
-</font>
-
-</div>
-
-</div>
-
-
 </div>
 
   <div class="section" id="estimasiJHTBox" style="
@@ -1321,6 +1288,38 @@ style="
 <font size="1,5px" id="catatanJakon" style="color:#666;display:none;margin-top:6px">
 Catatan: Estimasi manfaat Jaminan Kecelakaan Kerja (JKK) pada simulasi Jasa Konstruksi menggunakan asumsi upah sebesar <b>Rp 2.000.000</b> per bulan.
 </font>
+
+</div>
+
+<div id="kontakBPJS" class="contact-card">
+
+<div class="contact-header">
+📞 Informasi Lebih Lanjut
+</div>
+
+<div class="contact-body">
+
+<div class="contact-row">
+<span class="icon">🏢</span>
+<span id="namaKantor"></span>
+</div>
+<div id="jarakKantor" class="distance"></div>
+
+<div class="contact-row">
+<span class="icon">📍</span>
+<span id="alamatKantor"></span>
+</div>
+
+<a id="mapsKantor" class="maps-btn" target="_blank">
+📍 Buka di Google Maps
+</a>
+
+<br>
+<font size="1px" style="color:#666">
+Kantor Cabang terdekat berdasarkan lokasi Anda.
+</font>
+
+</div>
 
 </div>
 
@@ -3488,97 +3487,44 @@ window.printSection = function(){
 
 const kantorBPJS = [
 
-{nama:"BPJS Ketenagakerjaan Surabaya Karimunjawa", alamat:"Jl. Karimunjawa No.6 Surabaya", kota:"Kota Surabaya"},
-{nama:"BPJS Ketenagakerjaan Kediri", alamat:"Jl. Mayor Bismo No.34 Kediri", kota:"Kota Kediri"},
-{nama:"BPJS Ketenagakerjaan Malang", alamat:"Jl. Dr. Sutomo No.1 Malang", kota:"Kota Malang"},
-{nama:"BPJS Ketenagakerjaan Jember", alamat:"Jl. Gajah Mada Jember", kota:"Kabupaten Jember"},
-{nama:"BPJS Ketenagakerjaan Pasuruan", alamat:"Jl. Ir Juanda No.77 Pasuruan", kota:"Kota Pasuruan"},
-{nama:"BPJS Ketenagakerjaan Mojokerto", alamat:"Jl. Gajah Mada Mojokerto", kota:"Kabupaten Mojokerto"},
-{nama:"BPJS Ketenagakerjaan Banyuwangi", alamat:"Jl. Jaksa Agung Suprapto No.49 Banyuwangi", kota:"Kabupaten Banyuwangi"},
-{nama:"BPJS Ketenagakerjaan Madiun", alamat:"Jl. Mayjen DI Panjaitan No.10 Madiun", kota:"Kota Madiun"},
-{nama:"BPJS Ketenagakerjaan Blitar", alamat:"Jl. Ahmad Yani Blitar", kota:"Kota Blitar"},
-{nama:"BPJS Ketenagakerjaan Madura", alamat:"Kabupaten Bangkalan", kota:"Kabupaten Bangkalan"},
-{nama:"BPJS Ketenagakerjaan Bojonegoro", alamat:"Jl. Veteran Bojonegoro", kota:"Kabupaten Bojonegoro"},
-{nama:"BPJS Ketenagakerjaan Sidoarjo", alamat:"Jl. Pahlawan Taman Pinang Indah Sidoarjo", kota:"Kabupaten Sidoarjo"},
-{nama:"BPJS Ketenagakerjaan Gresik", alamat:"Jl. Dr Wahidin Sudirohusodo Gresik", kota:"Kabupaten Gresik"},
-{nama:"BPJS Ketenagakerjaan Surabaya Darmo", alamat:"Jl. Diponegoro Surabaya", kota:"Kota Surabaya"},
-{nama:"BPJS Ketenagakerjaan Surabaya Tanjung Perak", alamat:"Jl. Perak Timur Surabaya", kota:"Kota Surabaya"},
-{nama:"BPJS Ketenagakerjaan Juanda", alamat:"Jl. Raya Juanda No.52 Sedati", kota:"Kabupaten Sidoarjo"},
-{nama:"BPJS Ketenagakerjaan Lumajang", alamat:"Jl. Slamet Riyadi Lumajang", kota:"Kabupaten Lumajang"},
-{nama:"BPJS Ketenagakerjaan Probolinggo", alamat:"Jl. Imam Bonjol Probolinggo", kota:"Kabupaten Probolinggo"},
-{nama:"BPJS Ketenagakerjaan Pandaan", alamat:"Pandaan Pasuruan", kota:"Kabupaten Pasuruan"},
-{nama:"BPJS Ketenagakerjaan Jombang", alamat:"Jl. Wahid Hasyim Jombang", kota:"Kabupaten Jombang"},
-{nama:"BPJS Ketenagakerjaan Tulungagung", alamat:"Plosokandang Tulungagung", kota:"Kabupaten Tulungagung"},
-{nama:"BPJS Ketenagakerjaan Tuban", alamat:"Jl. Wahidin Tuban", kota:"Kabupaten Tuban"},
-{nama:"BPJS Ketenagakerjaan Sidoarjo Krian", alamat:"Krian Sidoarjo", kota:"Kabupaten Sidoarjo"},
-{nama:"BPJS Ketenagakerjaan Gresik Driyorejo", alamat:"Driyorejo Gresik", kota:"Kabupaten Gresik"},
-{nama:"BPJS Ketenagakerjaan Malang Kepanjen", alamat:"Kepanjen Malang", kota:"Kabupaten Malang"},
-{nama:"BPJS Ketenagakerjaan Lamongan", alamat:"Jl. Sunan Giri Lamongan", kota:"Kabupaten Lamongan"},
-{nama:"BPJS Ketenagakerjaan Sumenep", alamat:"Jl. Trunojoyo Sumenep", kota:"Kabupaten Sumenep"},
-{nama:"BPJS Ketenagakerjaan Ponorogo", alamat:"Jl. Soekarno Hatta Ponorogo", kota:"Kabupaten Ponorogo"},
-{nama:"BPJS Ketenagakerjaan Bondowoso", alamat:"Jl. Diponegoro Bondowoso", kota:"Kabupaten Bondowoso"},
-{nama:"BPJS Ketenagakerjaan Ngawi", alamat:"Jl. Sudirman Ngawi", kota:"Kabupaten Ngawi"},
-{nama:"BPJS Ketenagakerjaan Pamekasan", alamat:"Stadion Pamekasan", kota:"Kabupaten Pamekasan"},
-{nama:"BPJS Ketenagakerjaan Trenggalek", alamat:"Jl. Soekarno Hatta Trenggalek", kota:"Kabupaten Trenggalek"},
-{nama:"BPJS Ketenagakerjaan Situbondo", alamat:"Jl. Kenanga Situbondo", kota:"Kabupaten Situbondo"},
-{nama:"BPJS Ketenagakerjaan Pacitan", alamat:"Jl. Basuki Rahmat Pacitan", kota:"Kabupaten Pacitan"},
-{nama:"BPJS Ketenagakerjaan Batu", alamat:"Kota Batu", kota:"Kota Batu"},
-{nama:"BPJS Ketenagakerjaan Nganjuk", alamat:"Jl. Gatot Subroto Nganjuk", kota:"Kabupaten Nganjuk"}
+{nama:"BPJS Ketenagakerjaan Surabaya Karimunjawa", alamat:"Jl. Karimunjawa, No. 6, Surabaya", lat:-7.2691, lng:112.7441},
+{nama:"BPJS Ketenagakerjaan Kediri", alamat:"Jl. Mayor Bismo No. 34, Kediri", lat:-7.7989, lng:112.0084},
+{nama:"BPJS Ketenagakerjaan Malang", alamat:"Jl. Dr. Sutomo No. 1, Malang", lat:-7.9754, lng:112.6341},
+{nama:"BPJS Ketenagakerjaan Jember", alamat:"Jl. Letjen Sutoyo No. 15 A, Jember", lat:-8.1837, lng:113.7144},
+{nama:"BPJS Ketenagakerjaan Pasuruan", alamat:"Jl. Ir. H. Juanda No. 77, Pasuruan", lat:-7.6402, lng:112.9194},
+{nama:"BPJS Ketenagakerjaan Mojokerto", alamat:"Jl. Raya Tambakagung No. 54, Puri", lat:-7.5052, lng:112.4507},
+{nama:"BPJS Ketenagakerjaan Banyuwangi", alamat:"Jl. Jaksa Agung Suprapto No. 49", lat:-8.2079, lng:114.3686},
+{nama:"BPJS Ketenagakerjaan Madiun", alamat:"Jl. DI Panjaitan No. 10, Madiun", lat:-7.6393, lng:111.5284},
+{nama:"BPJS Ketenagakerjaan Blitar", alamat:"Jl. Palem No. 72, Rembang, Blitar", lat:-8.0934, lng:112.1681},
+{nama:"BPJS Ketenagakerjaan Madura", alamat:"Jl. KH Moh Kholil, Bangkalan", lat:-7.0454, lng:112.7363},
+{nama:"BPJS Ketenagakerjaan Bojonegoro", alamat:"Jl. Teuku Umar No. 1", lat:-7.1507, lng:111.8817},
+{nama:"BPJS Ketenagakerjaan Sidoarjo", alamat:"Jl. Raya Jati No. 14", lat:-7.4478, lng:112.7186},
+{nama:"BPJS Ketenagakerjaan Gresik", alamat:"Jl. Dr Wahidin Sudirohusodo", lat:-7.1569, lng:112.6554},
+{nama:"BPJS Ketenagakerjaan Surabaya Darmo", alamat:"Jl. Raya Darmo", lat:-7.2892, lng:112.7399},
+{nama:"BPJS Ketenagakerjaan Surabaya Tanjung Perak", alamat:"Jl. Perak Timur", lat:-7.2145, lng:112.7393},
+{nama:"BPJS Ketenagakerjaan Juanda", alamat:"Jl. Raya Juanda No. 52, Sedati", lat:-7.3818, lng:112.7516},
+{nama:"BPJS Ketenagakerjaan Lumajang", alamat:"Jl. Ahmad Yani", lat:-8.1335, lng:113.2244},
+{nama:"BPJS Ketenagakerjaan Probolinggo", alamat:"Jl. Panglima Sudirman", lat:-7.7543, lng:113.2159},
+{nama:"BPJS Ketenagakerjaan Pandaan", alamat:"Jl. Raya Pandaan", lat:-7.6527, lng:112.7043},
+{nama:"BPJS Ketenagakerjaan Jombang", alamat:"Jl. KH Wahid Hasyim", lat:-7.5454, lng:112.2337},
+{nama:"BPJS Ketenagakerjaan Tulungagung", alamat:"Jl. Pahlawan", lat:-8.0657, lng:111.9041},
+{nama:"BPJS Ketenagakerjaan Tuban", alamat:"Jl. Basuki Rahmat", lat:-6.8945, lng:112.0493},
+{nama:"BPJS Ketenagakerjaan Krian", alamat:"Jl. Raya Krian", lat:-7.4102, lng:112.5793},
+{nama:"BPJS Ketenagakerjaan Driyorejo", alamat:"Jl. Raya Driyorejo", lat:-7.3574, lng:112.6246},
+{nama:"BPJS Ketenagakerjaan Kepanjen", alamat:"Jl. Panji", lat:-8.1312, lng:112.5747},
+{nama:"BPJS Ketenagakerjaan Lamongan", alamat:"Jl. Basuki Rahmat", lat:-7.1167, lng:112.4167},
+{nama:"BPJS Ketenagakerjaan Sumenep", alamat:"Jl. Trunojoyo", lat:-7.0167, lng:113.8590},
+{nama:"BPJS Ketenagakerjaan Ponorogo", alamat:"Jl. Soekarno Hatta", lat:-7.8650, lng:111.4620},
+{nama:"BPJS Ketenagakerjaan Bondowoso", alamat:"Jl. Diponegoro", lat:-7.9137, lng:113.8210},
+{nama:"BPJS Ketenagakerjaan Ngawi", alamat:"Jl. Yos Sudarso", lat:-7.4049, lng:111.4461},
+{nama:"BPJS Ketenagakerjaan Pamekasan", alamat:"Jl. Jokotole", lat:-7.1568, lng:113.4746},
+{nama:"BPJS Ketenagakerjaan Trenggalek", alamat:"Jl. Soekarno Hatta", lat:-8.0553, lng:111.7161},
+{nama:"BPJS Ketenagakerjaan Situbondo", alamat:"Jl. Basuki Rahmat", lat:-7.7050, lng:113.9420},
+{nama:"BPJS Ketenagakerjaan Pacitan", alamat:"Jl. Basuki Rahmat", lat:-8.1942, lng:111.1057},
+{nama:"BPJS Ketenagakerjaan Batu", alamat:"Jl. Panglima Sudirman", lat:-7.8719, lng:112.5267},
+{nama:"BPJS Ketenagakerjaan Nganjuk", alamat:"Jl. Gatot Subroto", lat:-7.6051, lng:111.9041}
 
 ];
-
-async function geocodeAlamat(alamat){
-
-let url="https://nominatim.openstreetmap.org/search?format=json&q="+encodeURIComponent(alamat);
-
-let res=await fetch(url);
-let data=await res.json();
-
-if(data.length>0){
-
-return{
-lat:parseFloat(data[0].lat),
-lng:parseFloat(data[0].lon)
-};
-
-}
-
-return null;
-
-}
-
-async function isiKoordinat(){
-
-let cache=localStorage.getItem("bpjs_kantor");
-
-if(cache){
-
-let data=JSON.parse(cache);
-data.forEach((k,i)=>{
-kantorBPJS[i].lat=k.lat;
-kantorBPJS[i].lng=k.lng;
-});
-
-return;
-
-}
-
-for(let kantor of kantorBPJS){
-
-let hasil=await geocodeAlamat(kantor.nama+" "+kantor.alamat);
-
-if(hasil){
-
-kantor.lat=hasil.lat;
-kantor.lng=hasil.lng;
-
-}
-
-}
-
-localStorage.setItem("bpjs_kantor",JSON.stringify(kantorBPJS));
-
-}
 
 
 function hitungJarak(lat1, lon1, lat2, lon2){
@@ -3612,6 +3558,10 @@ let lngUser = pos.coords.longitude;
 
 cariKantorTerdekat(latUser,lngUser);
 
+}, function(){
+
+alert("Lokasi tidak dapat diambil.");
+
 });
 
 }
@@ -3622,8 +3572,26 @@ cariKantorTerdekat(latUser,lngUser);
 
 function cariKantorTerdekat(lat,lng){
 
-// sementara gunakan kantor pertama
-let kantorDekat = kantorBPJS[0];
+let jarakMin = Infinity;
+let kantorDekat = null;
+
+kantorBPJS.forEach(function(kantor){
+
+let jarak = hitungJarak(
+lat,
+lng,
+kantor.lat,
+kantor.lng
+);
+
+if(jarak < jarakMin){
+
+jarakMin = jarak;
+kantorDekat = kantor;
+
+}
+
+});
 
 if(kantorDekat){
 
@@ -3638,7 +3606,7 @@ document.getElementById("mapsKantor").href =
 encodeURIComponent(kantorDekat.nama + " " + kantorDekat.alamat);
 
 document.getElementById("jarakKantor").innerHTML =
-"Kantor BPJS berdasarkan data cabang";
+"📏 "+jarakMin.toFixed(1)+" km dari lokasi Anda";
 
 document.getElementById("kontakBPJS").style.display="block";
 
@@ -3647,12 +3615,6 @@ document.getElementById("kontakBPJS").style.display="block";
 }
 
 
-
-window.addEventListener("load", function(){
-
-isiKoordinat();
-
-});
 
 </script>
 
