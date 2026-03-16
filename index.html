@@ -677,6 +677,22 @@ margin-bottom:14px;
 color:#555;
 }
 
+.contact-body {
+  text-align: center;
+}
+
+.contact-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.maps-btn {
+  display: inline-block;
+  margin-top: 10px;
+}
 </style>
 </head>
 <body>
@@ -1382,7 +1398,6 @@ Catatan: Estimasi manfaat Jaminan Kecelakaan Kerja (JKK) pada simulasi Jasa Kons
 <span class="icon">🏢</span>
 <span id="namaKantor"></span>
 </div>
-<div id="jarakKantor" class="distance"></div>
 <div class="contact-row">
 <span class="icon">📍</span>
 <span id="alamatKantor"></span>
@@ -2761,11 +2776,15 @@ window.hitungBPU = function () {
   `;
 const grandTotal = totalNormal + totalDiskon + totalJHT;
   // 7️⃣ KESIMPULAN
+
+let jumlahProgram = ikutJHT ? 3 : 2;
+
 document.getElementById('ringkasanBPU').innerHTML = `
 <p style="font-size:15px"> 
-  Berdasarkan periode perlindungan <b>${bulan} bulan</b> 
-  dengan upah bulanan sebesar <b>Rp ${format(income)}</b>, rincian iuran BPU 
-  yang harus dibayarkan adalah:
+  Berdasarkan simulasi periode perlindungan <b>${bulan} bulan</b> 
+  dengan upah bulanan sebesar <b>Rp ${format(income)}</b> 
+  dan keikutsertaan <b>${jumlahProgram} program</b>, 
+  rincian iuran BPU yang harus dibayarkan adalah:
 </p>
 
 <ul>
