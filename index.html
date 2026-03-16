@@ -3497,7 +3497,7 @@ const kantorBPJS = [
 {nama:"BPJS Ketenagakerjaan Pasuruan", alamat:"Jl. Ir. H. Juanda No. 77, Pasuruan", lat:-7.6402, lng:112.9194},
 {nama:"BPJS Ketenagakerjaan Mojokerto", alamat:"Jl. Raya Tambakagung No. 54, Puri", lat:-7.5052, lng:112.4507},
 {nama:"BPJS Ketenagakerjaan Banyuwangi", alamat:"Jl. Jaksa Agung Suprapto No. 49", lat:-8.219547, lng:114.369849},
-{nama:"BPJS Ketenagakerjaan Madiun", alamat:"Jl. DI Panjaitan No. 10, Madiun", lat:-7.629208, lng:111.524669},
+{nama:"BPJS Ketenagakerjaan Madiun", alamat:"Jl. DI Panjaitan No. 10, Madiun", lat:-7.6393, lng:111.5284},
 {nama:"BPJS Ketenagakerjaan Blitar", alamat:"Jl. Palem No. 72, Rembang, Blitar", lat:-8.0934, lng:112.1764},
 {nama:"BPJS Ketenagakerjaan Madura (Bangkalan)", alamat:"Jl. Halim Perdana Kusuma No. 4", lat:-7.0371, lng:112.7533},
 {nama:"BPJS Ketenagakerjaan Bojonegoro", alamat:"Jl. Veteran No. 81, Bojonegoro", lat:-7.1652, lng:111.8943},
@@ -3595,6 +3595,14 @@ kantorDekat = kantor;
 }
 
 });
+
+// jika di luar Jawa Timur → sembunyikan
+if(jarakMin > 200){
+
+document.getElementById("kontakBPJS").style.display="none";
+return;
+
+}
 
 if(kantorDekat){
 
