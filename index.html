@@ -2763,7 +2763,9 @@ const grandTotal = totalNormal + totalDiskon + totalJHT;
   // 7️⃣ KESIMPULAN
 document.getElementById('ringkasanBPU').innerHTML = `
 <p style="font-size:15px"> 
-  Berdasarkan periode perlindungan yang dipilih, rincian iuran BPU adalah:
+  Berdasarkan periode perlindungan <b>${bulan} bulan</b> 
+  dengan upah bulanan sebesar <b>Rp ${format(upah)}</b>, rincian iuran BPU 
+  yang harus dibayarkan adalah:
 </p>
 
 <ul>
