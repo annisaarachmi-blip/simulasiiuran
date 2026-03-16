@@ -3529,18 +3529,16 @@ const kantorBPJS = [
 
 async function geocodeAlamat(alamat){
 
-let url =
-"https://nominatim.openstreetmap.org/search?format=json&q=" +
-encodeURIComponent(alamat);
+let url="https://nominatim.openstreetmap.org/search?format=json&q="+encodeURIComponent(alamat);
 
-let res = await fetch(url);
-let data = await res.json();
+let res=await fetch(url);
+let data=await res.json();
 
-if(data.length > 0){
+if(data.length>0){
 
-return {
-lat: parseFloat(data[0].lat),
-lng: parseFloat(data[0].lon)
+return{
+lat:parseFloat(data[0].lat),
+lng:parseFloat(data[0].lon)
 };
 
 }
@@ -3551,20 +3549,34 @@ return null;
 
 async function isiKoordinat(){
 
+let cache=localStorage.getItem("bpjs_kantor");
+
+if(cache){
+
+let data=JSON.parse(cache);
+data.forEach((k,i)=>{
+kantorBPJS[i].lat=k.lat;
+kantorBPJS[i].lng=k.lng;
+});
+
+return;
+
+}
+
 for(let kantor of kantorBPJS){
 
-let hasil = await geocodeAlamat(
-kantor.nama + " " + kantor.alamat
-);
+let hasil=await geocodeAlamat(kantor.nama+" "+kantor.alamat);
 
 if(hasil){
 
-kantor.lat = hasil.lat;
-kantor.lng = hasil.lng;
+kantor.lat=hasil.lat;
+kantor.lng=hasil.lng;
 
 }
 
 }
+
+localStorage.setItem("bpjs_kantor",JSON.stringify(kantorBPJS));
 
 }
 
