@@ -462,7 +462,12 @@ body{
   padding:0;
   box-shadow:none;
   border-radius:0;
+  
+  /* FIX iPhone page jump */
+  transform:scale(0.98);
+  transform-origin:top center;
 }
+
 
 /* sembunyikan elemen yang tidak perlu dicetak */
 #landingSection,
@@ -481,7 +486,6 @@ button{
 #estimasiJHTBox,
 #estimasiJHTBoxBPU,
 #manfaatProgram{
-  break-before:page;
   page-break-before:always;
 }
 
@@ -3564,8 +3568,8 @@ const kantorBPJS = [
 {nama:"BPJS Ketenagakerjaan Bondowoso Diponegoro", alamat:"Ruko A Yani Square Kav 3", lat:-7.9134, lng:113.8212},
 {nama:"BPJS Ketenagakerjaan Ngawi Sudirman", alamat:"Ruko Mojorejo Indah No. 50 C", lat:-7.4053, lng:111.4421},
 {nama:"BPJS Ketenagakerjaan Pamekasan Stadion", alamat:"Bani Regency, Barurambat Timur", lat:-7.1565, lng:113.4912},
-{nama:"BPJS Ketenagakerjaan Trenggalek S. Hatta", alamat:"Jl. Soekarno Hatta No. 44", lat:-8.0492, lng:111.7103},
-{nama:"BPJS Ketenagakerjaan Situbondo Kenanga", alamat:"Jl. Wijaya Kusuma No. 72", lat:-7.6961, lng:113.9972},
+{nama:"BPJS Ketenagakerjaan Trenggalek S. Hatta", alamat:"Jl. Soekarno Hatta No. 44", lat:-8.0593, lng:111.7074},
+{nama:"BPJS Ketenagakerjaan Situbondo Kenanga", alamat:"Jl. Wijaya Kusuma No. 72", lat:-7.7037, lng:114.0060},
 {nama:"BPJS Ketenagakerjaan Pacitan B. Rahmat", alamat:"Jl. Letjend R Suprapto No. 7", lat:-8.2045, lng:111.0921},
 {nama:"BPJS Ketenagakerjaan Batu Kota", alamat:"Jl. Suropati Barat Kav 184 A", lat:-7.8754, lng:112.5182},
 {nama:"BPJS Ketenagakerjaan Nganjuk G. Subroto", alamat:"Jl. Ahmad Yani No. 318", lat:-7.6053, lng:111.9051}
