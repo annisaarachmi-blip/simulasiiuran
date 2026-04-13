@@ -963,7 +963,7 @@ Perhitungan iuran = Rate Per Program x Upah Sebulan
    <table id="tabelHasil">
   <tr>
     <th>Program</th>
-    <th>Ditanggung Perusahaan</th>
+    <th>Ditanggung Pemberi Kerja</th>
     <th>Ditanggung Pekerja</th>
     <th>Iuran/Orang/Bulan</th>
     <th>Total Keseluruhan</th>
@@ -2916,7 +2916,7 @@ upahInput.addEventListener("input",()=>{
   tabel.innerHTML = `
     <tr>
       <th>Program</th>
-      <th>Ditanggung Perusahaan</th>
+      <th>Ditanggung Pemberi Kerja</th>
       <th>Ditanggung Pekerja</th>
 	   <th>Iuran/Bulan/Orang</th>
     </tr>`;
@@ -2967,7 +2967,7 @@ pPekerja = Math.round(pPekerja);
   tabel.innerHTML += `
     
     <tr>
-      <th colspan="3">Iuran Ditanggung Perusahaan</th>
+      <th colspan="3">Iuran Ditanggung Pemberi Kerja</th>
       <th>Rp ${format(totalPerusahaanBln * bln)}</th>
     </tr>
     <tr>
@@ -3004,7 +3004,7 @@ const namaProgram = daftarProgram.join(', ');
 </p>
 
 <ul style="font-size:15px">
-  <li>Iuran yang ditanggung perusahaan sebesar
+  <li>Iuran yang Ditanggung Pemberi Kerja sebesar
       <b>Rp ${format(totalPerusahaanBln)}</b></li>
   <li>Iuran yang ditanggung pekerja sebesar
       <b>Rp ${format(totalPekerjaBln)}</b></li>
