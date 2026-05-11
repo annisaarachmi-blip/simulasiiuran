@@ -2704,10 +2704,17 @@ window.hitungBPU = function () {
   const totalJHT = ikutJHT ? iuranJHTBulanan * bulan : 0;
 
   // 4️⃣ TARIF DASAR BPU
-  const JKK = 10000;
-  const JKM = 6800;
-  const iuranNormal = JKK + JKM;
-  const iuranDiskon = iuranNormal * 0.5;
+  const dasarUpah = income;
+
+// JKK mengikuti penghasilan
+const tarifJKK = 0.01; // 1%
+const JKK = dasarUpah * tarifJKK;
+
+// JKM tetap flat
+const JKM = 6800;
+
+const iuranNormal = JKK + JKM;
+const iuranDiskon = iuranNormal * 0.5;
 
   // 5️⃣ HITUNG BULAN DISKON / NORMAL
   let [y, m] = awal.split('-').map(Number);
